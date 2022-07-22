@@ -1,0 +1,8 @@
+node_modules
+.env
+.eslintrc.js
+.log
+server.cert
+server.key
+
+credentials.json

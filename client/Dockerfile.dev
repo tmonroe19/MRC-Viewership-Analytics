@@ -1,0 +1,15 @@
+FROM node:14-alpine
+RUN mkdir -p /client/node_modules && chown -R node:node /client
+WORKDIR /client
+
+COPY package*.json ./
+
+USER node
+
+RUN npm install
+
+COPY --chown=node:node . .
+
+EXPOSE 3000
+
+CMD ["npm", "start"]

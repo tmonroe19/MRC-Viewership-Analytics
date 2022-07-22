@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/client
+      - /client/node_modules
+
+    command: npm start
+    restart: always
+    tty: true
+    networks:
+      - webappnetwork
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3001:3001
+      - 9229:9229
+    command: npm run dev
+    env_file: ./server/.env
+    volumes:
+      - ./server:/server
+    restart: always
+    tty: true
+    networks:
+      - webappnetwork
+
+
+networks:
+  webappnetwork:
+    driver: bridge
